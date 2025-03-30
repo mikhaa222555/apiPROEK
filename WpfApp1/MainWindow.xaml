@@ -3,71 +3,104 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1000">
+        Height ="850" Width="1200" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="NoResize" Background="{x:Null}" AllowsTransparency="True" Loaded="Window_Loaded">
     <Grid>
-        <!--  содержимое здесь -->
-        <StackPanel Background="#464451">
-
-            <Label Content="Заглавие:" />
-            <TextBox Text="{Binding NewTaskTitle}" Width="200" />
-
-            <Label Content="Описание:" />
-            <TextBox Text="{Binding NewTaskDescription}" Width="200" />
-
-            <Label Content="Срок выполнения:" />
-            <DatePicker SelectedDate="{Binding NewTaskDueDate}" Width="200" />
-
-            <Label Content="Приоритет:" />
-            <ComboBox ItemsSource="{Binding AvailablePriorities}" SelectedValue="{Binding NewTaskPriority}" Width="200" />
-
-            <Label Content="Статус:" />
-            <ComboBox ItemsSource="{Binding AvailableStatuses}" SelectedValue="{Binding NewTaskStatus}" Width="200" />
-
-            <Label Content="Назначенный пользователь:" />
-            <TextBox Text="{Binding NewTaskAssignedUser}" Width="200" />
-
-            <Button Content="Добавить задачу" Command="{Binding AddTaskCommand}" Height="22" RenderTransformOrigin="0.5,0.5" Foreground="#FF0C0C0C" >
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform AngleX="-2.973"/>
-                        <RotateTransform/>
-                        <TranslateTransform X="-0.571"/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
-            <ListBox ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask}" DisplayMemberPath="Title" Width="200" Height="100" />
-
-            <Button Content="Обновить задачу" Command="{Binding UpdateTaskCommand}" Foreground="Black" Click="Button_Click" />
+        <Button>
+            <StackPanel Orientation="Horizontal">
+                <!-- Теперь можно добавить несколько элементов -->
+                <TextBlock Text="Текст 1" />
+                <TextBlock Text="Текст 2" />
+            </StackPanel>
+        </Button>
+        <materialDesign:Card Margin="10" UniformCornerRadius="15"
+                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">//Add the namespace to this element.
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <!-- ListBox для отображения задач -->
-                <ListBox x:Name="TasksListBox" ItemsSource="{Binding Tasks}" SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
-                 DisplayMemberPath="Title" Grid.Row="1" Margin="10" Width="200" HorizontalAlignment="Left"/>
-
-                <!-- Форма для редактирования выбранной задачи -->
-                <StackPanel Grid.Row="1" Margin="220 10 10 10">
-                    <TextBlock Text="Название:" FontWeight="Bold"/>
-                    <TextBox Text="{Binding SelectedTask.Title, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 10"/>
-
-                    <TextBlock Text="Описание:" FontWeight="Bold"/>
-                    <TextBox Text="{Binding SelectedTask.Description, UpdateSourceTrigger=PropertyChanged}" Margin="0 0 0 10"/>
-
-                    <CheckBox Content="Выполнено" IsChecked="{Binding SelectedTask.IsCompleted, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <Button Content="Обновить задачу" Command="{Binding UpdateTaskCommand}" Foreground="Black"  Margin="0 10 0 0" Width="150" HorizontalAlignment="Left"/>
-                </StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <!-- Добавлена закрывающая угловая скобка -->
+                </Grid.ColumnDefinitions>
             </Grid>
+        </materialDesign:Card>
+        <Grid.Resources>
+            <Style TargetType="materialDesign:PackIcon">
+                <!-- Правильное место для Style -->
+                <Setter Property="Width" Value="30"/>
+                <Setter Property="Height" Value="30"/>
+            </Style>
+        </Grid.Resources>
+        <Window.Resources>
+            <Style x:Key="MyPackIconStyle" TargetType="{x:Type materialDesign:PackIcon}">
+                <Setter Property="Width" Value="30"/>
+            </Style>
+        </Window.Resources>
 
-<Button Content="Удалить задачу" Command="{Binding DeleteTaskCommand}" />
-            <Button Content="Загружать задачи" Command="{Binding LoadTasksCommand}" />
-            <!-- конец тут -->
-        </StackPanel>
-    </Grid>
+        <Grid>
+            <!-- Закрываем Grid -->
+            <Button>
+                Какой-то текст
+                <materialDesign:PackIcon Kind="Home" Style="{StaticResource MyPackIconStyle}"/>
+            </Button>
+            <!-- Закрываем Button -->
+        </Grid>
+        <!-- Открываем Grid -->
+        <Grid Grid.Column="0">
+            <ListView Margin="0 15">
+                <ListViewItem HorizontalAlignment="Center" Margin="0 10">
+                    <Button Style="{StaticResource MaterialDesignFloatingActionButton}" HorizontalAlignment="Left"
+                             BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black">
+                        <StackPanel Margin="-5">
+                            <materialDesign:PackIcon Kind="Resistor"/>
+                        </StackPanel>
+                    </Button>
+                </ListViewItem>
+                <ListViewItem HorizontalAlignment="Center" Margin="0">
+                    <Button Style="{StaticResource MaterialDesignFloatingActionButton}" HorizontalAlignment="Left"
+                             BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black">
+                        <StackPanel Margin="-5">
+                            <materialDesign:PackIcon Kind="CircleSlice6"/>
+                        </StackPanel>
+                    </Button>
+                </ListViewItem>
+                <ListViewItem HorizontalAlignment="Center" Margin="0 10">
+                    <Button Style="{StaticResource MaterialDesignFloatingActionButton}" HorizontalAlignment="Left"
+                             BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black">
+                        <StackPanel Margin="-5">
+                            <materialDesign:PackIcon Kind="CalendarBlankOutline"/>
+                        </StackPanel>
+                    </Button>
+                </ListViewItem>
+                <ListViewItem HorizontalAlignment="Center" Margin="0">
+                    <Button Style="{StaticResource MaterialDesignFloatingActionButton}" HorizontalAlignment="Left"
+                             BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black">
+                        <StackPanel Margin="-5">
+                            <materialDesign:PackIcon Kind="EqualiserVertical"/>
+                        </StackPanel>
+                    </Button>
+                </ListViewItem>
+                <ListViewItem HorizontalAlignment="Center" Margin="0">
+                    <Button Style="{StaticResource MaterialDesignFloatingActionButton}" HorizontalAlignment="Left"
+                             BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black">
+                        <StackPanel Margin="-5">
+                            <materialDesign:PackIcon Kind="EqualiserVertical"/>
+                            <!-- Исправлено: dw на Kind -->
+                        </StackPanel>
+                    </Button>
+                </ListViewItem>
+                <ListViewItem HorizontalAlignment="Center" Margin="0 60 0 0">
+                    <Button Style="{StaticResource MaterialDesignFloatingActionButton}" HorizontalAlignment="Left"
+                             BorderBrush="{x:Null}" Background="{x:Null}" Foreground="Black" x:Name="btnExit" Click="btnExit_Click">
+                        <StackPanel Margin="-5">
+                            <materialDesign:PackIcon Kind="ExitToApp"/>
+                        </StackPanel>
+                    </Button>
+                </ListViewItem>
+            </ListView>
+            <Grid>
+                <Grid Grid.Column="1" Background="#F6F5F8" Name="RenderPages">
+            </Grid>
 </Window>
